@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram & Fitness | DSA 210 Project</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1a1;
+            --text-muted: #6b6b6b;
+            --accent-instagram: #E1306C;
+            --accent-fitness: #34D399;
+            --accent-blue: #60A5FA;
+            --gradient-instagram: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+            --gradient-fitness: linear-gradient(135deg, #059669, #34D399, #6EE7B7);
+            --gradient-mixed: linear-gradient(135deg, #833AB4, #34D399);
+            --border-subtle: rgba(255,255,255,0.08);
+            --glow-instagram: 0 0 60px rgba(225, 48, 108, 0.3);
+            --glow-fitness: 0 0 60px rgba(52, 211, 153, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        .serif {
+            font-family: 'Instrument Serif', Georgia, serif;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Animated Background */
+        .bg-gradient-blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-gradient-blur::before,
+        .bg-gradient-blur::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-gradient-blur::before {
+            background: var(--accent-instagram);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-gradient-blur::after {
+            background: var(--accent-fitness);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(100px, 50px) scale(1.1); }
+            50% { transform: translate(50px, 100px) scale(0.9); }
+            75% { transform: translate(-50px, 50px) scale(1.05); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            background: var(--gradient-mixed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-fitness);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.1s backwards;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-instagram);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .gradient-text-2 {
+            background: var(--gradient-fitness);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--text-muted);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            color: var(--accent-instagram);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid - Spotify Wrapped Style */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-instagram);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card.fitness::before {
+            background: var(--gradient-fitness);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.instagram {
+            background: linear-gradient(135deg, rgba(131, 58, 180, 0.2), rgba(225, 48, 108, 0.2));
+        }
+
+        .stat-icon.fitness {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(52, 211, 153, 0.2));
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-instagram);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card.fitness .stat-number {
+            background: var(--gradient-fitness);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stat-detail {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Data Sources Section */
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .source-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .source-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(225, 48, 108, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .source-card.fitness::after {
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.1) 0%, transparent 70%);
+        }
+
+        .source-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        .source-icon.instagram {
+            background: var(--gradient-instagram);
+        }
+
+        .source-icon.fitness {
+            background: var(--gradient-fitness);
+        }
+
+        .source-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .source-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .source-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .metric-tag {
+            padding: 0.4rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Methodology Section */
+        .methodology-steps {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .step-card {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient-mixed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .step-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Analysis/Findings Section */
+        .findings-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .finding-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .finding-visual {
+            height: 300px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .finding-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1rem;
+        }
+
+        .finding-visual .placeholder {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .finding-content {
+            padding: 2rem;
+        }
+
+        .finding-tag {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: rgba(225, 48, 108, 0.15);
+            color: var(--accent-instagram);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .finding-tag.positive {
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--accent-fitness);
+        }
+
+        .finding-tag.neutral {
+            background: rgba(96, 165, 250, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .finding-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .finding-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .finding-stats {
+            display: flex;
+            gap: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .finding-stat {
+            text-align: center;
+        }
+
+        .finding-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .finding-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Key Insight Highlight */
+        .insight-highlight {
+            background: linear-gradient(135deg, rgba(131, 58, 180, 0.1), rgba(52, 211, 153, 0.1));
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .insight-highlight::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            font-size: 6rem;
+            font-family: 'Instrument Serif', serif;
+            color: var(--text-muted);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .insight-text {
+            font-size: 1.75rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .insight-text .highlight {
+            background: var(--gradient-mixed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Limitations Section */
+        .limitations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .limitation-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .limitation-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .limitation-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .limitation-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Future Work */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .future-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .future-card:hover {
+            border-color: var(--accent-fitness);
+            box-shadow: var(--glow-fitness);
+        }
+
+        .future-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .future-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .future-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Conclusion */
+        .conclusion {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .conclusion-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .conclusion-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Animations on Scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .step-card {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .finding-stats {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .finding-stat {
+                flex: 1;
+                min-width: 80px;
+            }
+        }
+
+        /* Image placeholders - Replace these with your actual images */
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .chart-placeholder svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-gradient-blur"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">
+            <span>DSA 210</span> Project
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#data">Data</a></li>
+            <li><a href="#methodology">Methodology</a></li>
+            <li><a href="#findings">Findings</a></li>
+            <li><a href="#conclusions">Conclusions</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            DSA 210 Term Project • Fall 2024-2025
+        </div>
+        <h1>
+            <span class="gradient-text">Instagram</span> Activity<br>
+            meets <span class="gradient-text-2">Physical Exercise</span>
+        </h1>
+        <p class="hero-subtitle">
+            Exploring the relationship between daily social media behavior and workout habits 
+            using personal data from Instagram and Apple Watch.
+        </p>
+        <div class="hero-cta">
+            <a href="#findings" class="btn btn-primary">View Findings</a>
+            <a href="https://github.com/uveyzzz/DSA210_project" target="_blank" class="btn btn-secondary">GitHub Repository</a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Overview Stats -->
+    <section id="about">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Overview</div>
+            <h2 class="section-title">The Numbers at a Glance</h2>
+            <p class="section-subtitle">
+                A year's worth of personal data, analyzed to uncover behavioral patterns.
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-icon instagram">📱</div>
+                <div class="stat-number">12,641</div>
+                <div class="stat-label">Instagram Interactions</div>
+                <div class="stat-detail">Likes tracked over 370 days</div>
+            </div>
+            <div class="stat-card fitness animate-on-scroll">
+                <div class="stat-icon fitness">🏋️</div>
+                <div class="stat-number">137</div>
+                <div class="stat-label">Workout Sessions</div>
+                <div class="stat-detail">Traditional strength training</div>
+            </div>
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-icon instagram">❤️</div>
+                <div class="stat-number">75</div>
+                <div class="stat-label">Fitness-Related Likes</div>
+                <div class="stat-detail">Content classified by keywords</div>
+            </div>
+            <div class="stat-card fitness animate-on-scroll">
+                <div class="stat-icon fitness">⏱️</div>
+                <div class="stat-number">~70</div>
+                <div class="stat-label">Avg. Workout Minutes</div>
+                <div class="stat-detail">Per session duration</div>
+            </div>
+        </div>
+
+        <!-- Motivation -->
+        <div class="insight-highlight animate-on-scroll">
+            <p class="insight-text">
+                Does scrolling through <span class="highlight">fitness content</span> on Instagram 
+                actually motivate us to work out, or does it just make us 
+                <span class="highlight">feel like we already did?</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Data Sources -->
+    <section id="data">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Data Sources</div>
+            <h2 class="section-title">Where the Data Comes From</h2>
+            <p class="section-subtitle">
+                Two personal data exports merged on a daily level to enable correlation analysis.
+            </p>
+        </div>
+
+        <div class="data-sources">
+            <div class="source-card animate-on-scroll">
+                <div class="source-header">
+                    <div class="source-icon instagram">📸</div>
+                    <h3 class="source-title">Instagram Data</h3>
+                </div>
+                <p class="source-description">
+                    Exported from Meta Account Center, this dataset captures daily engagement patterns 
+                    including liked posts and saved content. A keyword-based classifier identifies 
+                    fitness-related interactions.
+                </p>
+                <div class="source-metrics">
+                    <span class="metric-tag">Daily likes count</span>
+                    <span class="metric-tag">Fitness likes</span>
+                    <span class="metric-tag">Engagement ratio</span>
+                    <span class="metric-tag">Content classification</span>
+                </div>
+            </div>
+
+            <div class="source-card fitness animate-on-scroll">
+                <div class="source-header">
+                    <div class="source-icon fitness">⌚</div>
+                    <h3 class="source-title">Apple Watch Data</h3>
+                </div>
+                <p class="source-description">
+                    Fitness metrics exported from the Health app, focusing on Traditional Strength Training 
+                    workouts. Includes physiological measurements and exercise intensity metrics.
+                </p>
+                <div class="source-metrics">
+                    <span class="metric-tag">Workout duration</span>
+                    <span class="metric-tag">Calories burned</span>
+                    <span class="metric-tag">Heart rate</span>
+                    <span class="metric-tag">Intensity level</span>
+                    <span class="metric-tag">Step count</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section id="methodology">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Methodology</div>
+            <h2 class="section-title">How the Analysis Works</h2>
+            <p class="section-subtitle">
+                A systematic approach to data processing, merging, and statistical analysis.
+            </p>
+        </div>
+
+        <div class="methodology-steps">
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Data Collection & Export</h3>
+                    <p>
+                        Personal data exported from Meta (Instagram) and Apple Health. Instagram data 
+                        includes JSON files with liked posts metadata. Apple Watch data exported as 
+                        CSV with detailed workout metrics.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Fitness Content Classification</h3>
+                    <p>
+                        A keyword-based classifier identifies fitness-related Instagram interactions using 
+                        50+ keywords in both English and Turkish, including hashtags (#fitness, #gym, #workout) 
+                        and account handle patterns.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Daily Aggregation & Merging</h3>
+                    <p>
+                        Both datasets aggregated to daily level using date as the key. Final merged dataset 
+                        contains 370 days with metrics like total_like, fitness_like, total_workout_minutes, 
+                        calories_burned, and workout_done binary indicator.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Statistical Analysis</h3>
+                    <p>
+                        Pearson correlation computed between Instagram metrics and workout variables. 
+                        Welch's t-test compares workout duration between days with and without fitness 
+                        content engagement. Binned analysis examines workout probability by interaction levels.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Findings / EDA -->
+    <section id="findings">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Exploratory Data Analysis</div>
+            <h2 class="section-title">What the Data Reveals</h2>
+            <p class="section-subtitle">
+                Visualizations and statistical tests exploring the Instagram-fitness relationship.
+            </p>
+        </div>
+
+        <div class="findings-grid">
+            <!-- Finding 1: Time Series -->
+            <div class="finding-card animate-on-scroll">
+                <div class="finding-visual">
+                    <div class="chart-placeholder">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                        </svg>
+                        <span>📊 Add your time series plot here<br><code>time_series_plot.png</code></span>
+                    </div>
+                </div>
+                <div class="finding-content">
+                    <span class="finding-tag neutral">Time Series Analysis</span>
+                    <h3 class="finding-title">Daily Patterns Over Time</h3>
+                    <p class="finding-description">
+                        The time series visualization shows Instagram activity (likes per day) alongside 
+                        workout sessions over the study period. Notable patterns include seasonal variations 
+                        and periods of increased/decreased activity.
+                    </p>
+                    <div class="finding-stats">
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">370</div>
+                            <div class="finding-stat-label">Days Tracked</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">~34</div>
+                            <div class="finding-stat-label">Avg Daily Likes</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">37%</div>
+                            <div class="finding-stat-label">Workout Days</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finding 2: Correlation -->
+            <div class="finding-card animate-on-scroll">
+                <div class="finding-visual">
+                    <div class="chart-placeholder">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span>📈 Add your correlation heatmap here<br><code>correlation_heatmap.png</code></span>
+                    </div>
+                </div>
+                <div class="finding-content">
+                    <span class="finding-tag">Correlation Analysis</span>
+                    <h3 class="finding-title">Weak Correlations Found</h3>
+                    <p class="finding-description">
+                        The correlation matrix reveals weak relationships between Instagram metrics 
+                        and workout variables. Fitness content likes show a slight positive correlation 
+                        with workout probability, but the effect is not statistically strong.
+                    </p>
+                    <div class="finding-stats">
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">0.05</div>
+                            <div class="finding-stat-label">Fitness-Workout Corr</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">-0.02</div>
+                            <div class="finding-stat-label">Total Likes-Workout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finding 3: Binned Analysis -->
+            <div class="finding-card animate-on-scroll">
+                <div class="finding-visual">
+                    <div class="chart-placeholder">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>📊 Add your bar chart here<br><code>binned_analysis.png</code></span>
+                    </div>
+                </div>
+                <div class="finding-content">
+                    <span class="finding-tag positive">Interesting Pattern</span>
+                    <h3 class="finding-title">Workout Probability by Fitness Interactions</h3>
+                    <p class="finding-description">
+                        When grouping days by fitness interaction levels (0, 1-2, 3+), a positive trend 
+                        emerges: days with more fitness content engagement show higher workout probability. 
+                        However, sample sizes vary significantly across groups.
+                    </p>
+                    <div class="finding-stats">
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">37%</div>
+                            <div class="finding-stat-label">0 Interactions</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">40%</div>
+                            <div class="finding-stat-label">1-2 Interactions</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">60%</div>
+                            <div class="finding-stat-label">3+ Interactions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finding 4: T-Test Results -->
+            <div class="finding-card animate-on-scroll">
+                <div class="finding-visual">
+                    <div class="chart-placeholder">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>📉 Add your statistical comparison plot here<br><code>ttest_comparison.png</code></span>
+                    </div>
+                </div>
+                <div class="finding-content">
+                    <span class="finding-tag neutral">Statistical Test</span>
+                    <h3 class="finding-title">No Significant Difference (Welch's t-test)</h3>
+                    <p class="finding-description">
+                        Comparing mean workout duration between days with zero fitness interactions vs. 
+                        one or more, the Welch's t-test shows no statistically significant difference 
+                        (p = 0.498). The means are similar across both groups.
+                    </p>
+                    <div class="finding-stats">
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">29.9</div>
+                            <div class="finding-stat-label">Mean (0 fitness)</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">33.9</div>
+                            <div class="finding-stat-label">Mean (1+ fitness)</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">0.498</div>
+                            <div class="finding-stat-label">p-value</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusions -->
+    <section id="conclusions">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Conclusions</div>
+            <h2 class="section-title">Key Takeaways</h2>
+            <p class="section-subtitle">
+                What we learned from this personal data exploration.
+            </p>
+        </div>
+
+        <div class="insight-highlight animate-on-scroll">
+            <p class="insight-text">
+                The data suggests a <span class="highlight">weak positive association</span> between 
+                fitness content engagement and workout behavior, but 
+                <span class="highlight">no strong causal relationship</span> can be established.
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-icon instagram">🔍</div>
+                <div class="stat-number" style="font-size: 2rem;">Finding 1</div>
+                <div class="stat-label" style="font-size: 1.1rem; color: var(--text-primary);">Correlation ≠ Causation</div>
+                <div class="stat-detail">
+                    While days with more fitness content engagement show higher workout probability, 
+                    this could be reverse causality (workout days → more fitness interest).
+                </div>
+            </div>
+            <div class="stat-card fitness animate-on-scroll">
+                <div class="stat-icon fitness">📊</div>
+                <div class="stat-number" style="font-size: 2rem;">Finding 2</div>
+                <div class="stat-label" style="font-size: 1.1rem; color: var(--text-primary);">Statistical Insignificance</div>
+                <div class="stat-detail">
+                    The t-test (p=0.498) confirms no significant difference in workout duration 
+                    based on fitness content exposure.
+                </div>
+            </div>
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-icon instagram">💡</div>
+                <div class="stat-number" style="font-size: 2rem;">Finding 3</div>
+                <div class="stat-label" style="font-size: 1.1rem; color: var(--text-primary);">Behavioral Complexity</div>
+                <div class="stat-detail">
+                    Exercise motivation is multifactorial. Social media is just one potential 
+                    influence among many lifestyle factors.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Limitations -->
+    <section id="limitations">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Limitations</div>
+            <h2 class="section-title">Study Constraints</h2>
+            <p class="section-subtitle">
+                Important caveats to consider when interpreting these results.
+            </p>
+        </div>
+
+        <div class="limitations-grid">
+            <div class="limitation-card animate-on-scroll">
+                <div class="limitation-icon">👤</div>
+                <h4 class="limitation-title">Single Subject</h4>
+                <p class="limitation-text">
+                    N=1 study design limits generalizability to broader populations.
+                </p>
+            </div>
+            <div class="limitation-card animate-on-scroll">
+                <div class="limitation-icon">📅</div>
+                <h4 class="limitation-title">Missing Data</h4>
+                <p class="limitation-text">
+                    Some days may have incomplete logs or export errors.
+                </p>
+            </div>
+            <div class="limitation-card animate-on-scroll">
+                <div class="limitation-icon">🏷️</div>
+                <h4 class="limitation-title">Classification Limits</h4>
+                <p class="limitation-text">
+                    Keyword-based classifier may miss or mislabel content.
+                </p>
+            </div>
+            <div class="limitation-card animate-on-scroll">
+                <div class="limitation-icon">⏰</div>
+                <h4 class="limitation-title">No Time-of-Day Data</h4>
+                <p class="limitation-text">
+                    Cannot determine if IG usage precedes or follows workouts.
+                </p>
+            </div>
+            <div class="limitation-card animate-on-scroll">
+                <div class="limitation-icon">📱</div>
+                <h4 class="limitation-title">Platform Limited</h4>
+                <p class="limitation-text">
+                    Only Instagram analyzed; other social media excluded.
+                </p>
+            </div>
+            <div class="limitation-card animate-on-scroll">
+                <div class="limitation-icon">🎯</div>
+                <h4 class="limitation-title">Content Type Unknown</h4>
+                <p class="limitation-text">
+                    Cannot distinguish between motivational vs. body-ideal content.
+                </p>
+            </div>
+        </div>
+
+        <!-- Future Work -->
+        <div class="section-header animate-on-scroll" style="margin-top: 5rem;">
+            <h2 class="section-title">Future Directions</h2>
+            <p class="section-subtitle">
+                Ideas for extending this research.
+            </p>
+        </div>
+
+        <div class="future-grid">
+            <div class="future-card animate-on-scroll">
+                <div class="future-icon">🧠</div>
+                <h4 class="future-title">Sentiment Analysis</h4>
+                <p class="future-description">
+                    Classify fitness content by type (motivational, body-ideal, educational) to 
+                    understand differential effects.
+                </p>
+            </div>
+            <div class="future-card animate-on-scroll">
+                <div class="future-icon">😴</div>
+                <h4 class="future-title">Sleep & Recovery Data</h4>
+                <p class="future-description">
+                    Include sleep duration and HRV to capture broader wellness context.
+                </p>
+            </div>
+            <div class="future-card animate-on-scroll">
+                <div class="future-icon">👥</div>
+                <h4 class="future-title">Multi-Subject Study</h4>
+                <p class="future-description">
+                    Expand to multiple participants for statistical power and generalizability.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Ethics -->
+    <footer>
+        <div class="footer-content">
+            <h3 class="footer-title">Ethical Statement</h3>
+            <p class="footer-text">
+                This project was fully conceptualized, designed, and implemented by the author. 
+                AI tools (ChatGPT, Claude) were used only to improve code clarity and text structure. 
+                All core ideas, data collection, analysis, and interpretation are original work.
+            </p>
+            <div class="footer-links">
+                <a href="https://github.com/uveyzzz/DSA210_project" target="_blank">GitHub Repository</a>
+                <a href="#about">Back to Top</a>
+            </div>
+            <p class="footer-copyright">
+                DSA 210 Term Project • Sabancı University • Fall 2024-2025
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
