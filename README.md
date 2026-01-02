@@ -321,5 +321,7 @@ and interpretation processes belong entirely to me.
 The use of AI tools followed academic integrity principles, ensuring that the final 
 content reflects the author’s own understanding, reasoning, and analytical work.
 
+Note: I have used GitHub codespace and Claude.ai Opus 4.5 to develop the HTML website since it is out of scope for this course
+
 > *This README represents the project proposal for the DSA 210 course, focusing on 
 > the intersection of social media behavior and physical activity data analytics.*
