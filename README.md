@@ -22,6 +22,8 @@ between social media usage and real-world physical activity.
 I exported my Instagram data from the **Meta Account Center** and focused on:
 
 - `liked_posts.json` (and optionally `saved_posts.json`),
+- `data_manual/saved_posts.json` (optional, used in the pipeline)
+
 
 For each liked (or saved) post, I extracted:
 
@@ -199,6 +201,58 @@ higher overall Instagram activity**, but this effect is also small and should be
 interpreted cautiously.
 
 ---
+### 4. Machine Learning Models
+
+For the 2 January milestone I added simple ML experiments in  
+`02_machine_learning.ipynb` / `02_machine_learning.py`.
+
+#### 4.1 Classification – Predicting Workout vs No-Workout
+
+**Target:** `workout_done` (0/1)  
+**Features:** daily Instagram metrics (`total_like_save`, `fitness_total`, 
+`fitness_share_likesaves`), simple calendar features (day of week, month), and some
+history features (e.g. “worked out yesterday”).
+
+Models compared:
+
+- Logistic Regression  
+- Random Forest Classifier  
+
+The main ROC curves are saved as:
+
+- `figures/classification_results.png`
+
+On the held-out test set:
+
+- Accuracy is around the majority baseline (≈ 0.75–0.80).  
+- ROC-AUC is ~0.54–0.57 (only slightly above random 0.5).  
+
+So even with simple ML, Instagram + calendar features provide **very limited predictive 
+power** for whether I will work out on a given day.
+
+#### 4.2 Regression – Predicting Workout Minutes
+
+For days with `workout_done = 1`, I tried to predict `total_workout_minutes`.
+
+Models:
+
+- Ridge Regression (linear)  
+- Random Forest Regressor  
+
+The “actual vs predicted” plot is saved as:
+
+- `figures/regression_results.png`
+
+R² scores are close to **0** (sometimes slightly positive for Random Forest, slightly 
+negative for Ridge), and prediction errors are large. This means the models hardly 
+explain any variance in workout duration beyond the global average.
+
+> **ML conclusion:** My Instagram metrics and simple calendar/history features are **not
+> sufficient to accurately predict** either whether I will work out or how long I will
+> work out. The patterns are weak and noisy.
+
+---
+
 
 ## Summary of Findings
 
@@ -211,10 +265,29 @@ interpreted cautiously.
     positive association with workout days.  
 - Sanity-check correlations (workout minutes vs active energy / steps) are strongly 
   positive, supporting the internal validity of the Apple Health data.
+- Machine-learning models (classification and regression) trained on Instagram + 
+  calendar features perform only slightly better than chance and do **not** yield 
+  useful prediction performance.
 
 Overall, my personal dataset does **not confirm** the intuitive “doom-scrolling kills 
 motivation” hypothesis. Any real effect—if it exists—appears to be **small and noisy** 
 for this one-year period and one individual.
+
+---
+## HTML Summary Report
+
+To present the results in a more polished way, I also created a small **HTML report**:
+- Purpose: provide a clean, “dashboard-like” overview of the project outcome.
+
+The HTML page includes:
+
+- A short textual summary of the research question and dataset.  
+- Embedded versions of the main figures:
+  - distributions of Instagram interactions and workout duration,  
+  - the bar chart of average workout minutes by fitness-interaction bins,  
+  - the ROC curves for the workout classifier,  
+  - the actual vs predicted minutes plot for the regression model.  
+- Simple color coding and layout to mimic a professional analytics report.
 
 ---
 
@@ -241,9 +314,9 @@ Possible extensions:
 ## Ethical Statement
 
 This project and its analysis were fully conceptualized, designed, and implemented by 
-the author. AI-based tools (e.g., ChatGPT) were used **only to improve the clarity, 
+the author. AI-based tools (ClaudeAI, ChatGPT) were used **only to improve the clarity, 
 structure, and language of the written text**. All core ideas, data collection, coding, 
-and interpretation processes belong entirely to the author.
+and interpretation processes belong entirely to me.
 
 The use of AI tools followed academic integrity principles, ensuring that the final 
 content reflects the author’s own understanding, reasoning, and analytical work.
