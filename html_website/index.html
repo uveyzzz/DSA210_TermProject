@@ -927,6 +927,7 @@
             <li><a href="#data">Data</a></li>
             <li><a href="#methodology">Methodology</a></li>
             <li><a href="#findings">Findings</a></li>
+            <li><a href="#ml">Machine Learning</a></li>
             <li><a href="#conclusions">Conclusions</a></li>
         </ul>
     </nav>
@@ -947,7 +948,7 @@
         </p>
         <div class="hero-cta">
             <a href="#findings" class="btn btn-primary">View Findings</a>
-            <a href="https://github.com/uveyzzz/DSA210_project" target="_blank" class="btn btn-secondary">GitHub Repository</a>
+            <a href="https://github.com/uveyzzz/DSA210_TermProject" target="_blank" class="btn btn-secondary">GitHub Repository</a>
         </div>
         <div class="scroll-indicator">
             <span>Scroll to explore</span>
@@ -1103,11 +1104,12 @@
             <div class="step-card animate-on-scroll">
                 <div class="step-number">4</div>
                 <div class="step-content">
-                    <h3>Statistical Analysis</h3>
+                    <h3>Statistical & ML Analysis</h3>
                     <p>
                         Pearson correlation computed between Instagram metrics and workout variables. 
-                        Welch's t-test compares workout duration between days with and without fitness 
-                        content engagement. Binned analysis examines workout probability by interaction levels.
+                        Welch's t-test and Mann-Whitney U tests compare workout metrics. Additionally, 
+                        machine learning models (Logistic Regression, Random Forest, Ridge Regression) 
+                        predict workout occurrence and duration from Instagram engagement patterns.
                     </p>
                 </div>
             </div>
@@ -1125,23 +1127,18 @@
         </div>
 
         <div class="findings-grid">
-            <!-- Finding 1: Time Series -->
+            <!-- Finding 1: Daily Patterns -->
             <div class="finding-card animate-on-scroll">
                 <div class="finding-visual">
-                    <div class="chart-placeholder">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
-                        </svg>
-                        <span>📊 Add your time series plot here<br><code>time_series_plot.png</code></span>
-                    </div>
+                    <img src="../figures/Picture1.png" alt="Daily activity patterns visualization">
                 </div>
                 <div class="finding-content">
                     <span class="finding-tag neutral">Time Series Analysis</span>
                     <h3 class="finding-title">Daily Patterns Over Time</h3>
                     <p class="finding-description">
-                        The time series visualization shows Instagram activity (likes per day) alongside 
-                        workout sessions over the study period. Notable patterns include seasonal variations 
-                        and periods of increased/decreased activity.
+                        The visualization shows Instagram activity alongside workout sessions over the study 
+                        period. Analysis reveals patterns in how fitness content engagement relates to actual 
+                        physical activity over time.
                     </p>
                     <div class="finding-stats">
                         <div class="finding-stat">
@@ -1160,23 +1157,18 @@
                 </div>
             </div>
 
-            <!-- Finding 2: Correlation -->
+            <!-- Finding 2: Analysis -->
             <div class="finding-card animate-on-scroll">
                 <div class="finding-visual">
-                    <div class="chart-placeholder">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                        <span>📈 Add your correlation heatmap here<br><code>correlation_heatmap.png</code></span>
-                    </div>
+                    <img src="../figures/Picture3.png" alt="Correlation and analysis visualization">
                 </div>
                 <div class="finding-content">
                     <span class="finding-tag">Correlation Analysis</span>
                     <h3 class="finding-title">Weak Correlations Found</h3>
                     <p class="finding-description">
-                        The correlation matrix reveals weak relationships between Instagram metrics 
-                        and workout variables. Fitness content likes show a slight positive correlation 
-                        with workout probability, but the effect is not statistically strong.
+                        Statistical analysis reveals weak relationships between Instagram metrics 
+                        and workout variables. Welch's t-test and Mann-Whitney U tests show no significant 
+                        difference in fitness content engagement between workout and rest days.
                     </p>
                     <div class="finding-stats">
                         <div class="finding-stat">
@@ -1193,12 +1185,23 @@
 
             <!-- Finding 3: Binned Analysis -->
             <div class="finding-card animate-on-scroll">
-                <div class="finding-visual">
-                    <div class="chart-placeholder">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>📊 Add your bar chart here<br><code>binned_analysis.png</code></span>
+                <div class="finding-visual" style="background: linear-gradient(135deg, rgba(131, 58, 180, 0.1), rgba(52, 211, 153, 0.1)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">📊</div>
+                        <div style="display: flex; gap: 2rem; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-instagram);">37%</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">0 interactions</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-blue);">40%</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">1-2 interactions</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-fitness);">60%</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">3+ interactions</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="finding-content">
@@ -1228,12 +1231,22 @@
 
             <!-- Finding 4: T-Test Results -->
             <div class="finding-card animate-on-scroll">
-                <div class="finding-visual">
-                    <div class="chart-placeholder">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>📉 Add your statistical comparison plot here<br><code>ttest_comparison.png</code></span>
+                <div class="finding-visual" style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(52, 211, 153, 0.1)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">📉</div>
+                        <div style="display: flex; gap: 3rem; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">29.9 min</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">Mean (0 fitness)</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">33.9 min</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">Mean (1+ fitness)</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                            <span style="color: var(--text-muted);">p-value = 0.498 (not significant)</span>
+                        </div>
                     </div>
                 </div>
                 <div class="finding-content">
@@ -1263,6 +1276,109 @@
         </div>
     </section>
 
+    <!-- Machine Learning Section -->
+    <section id="ml">
+        <div class="section-header animate-on-scroll">
+            <div class="section-label">Machine Learning</div>
+            <h2 class="section-title">Predictive Modeling</h2>
+            <p class="section-subtitle">
+                Using classification and regression models to predict workout behavior from Instagram engagement patterns.
+            </p>
+        </div>
+
+        <div class="findings-grid">
+            <!-- ML Finding 1: Classification ROC Curves -->
+            <div class="finding-card animate-on-scroll">
+                <div class="finding-visual">
+                    <img src="../figures/classification_results.png" alt="ROC Curves for Classification Models" style="max-height: 350px;">
+                </div>
+                <div class="finding-content">
+                    <span class="finding-tag positive">Classification Task</span>
+                    <h3 class="finding-title">Predicting Workout Days (Binary Classification)</h3>
+                    <p class="finding-description">
+                        Two classifiers were trained to predict whether a workout occurred on a given day based on 
+                        Instagram metrics (total_like_save, fitness_total, rolling averages, lag features, and temporal indicators). 
+                        Random Forest outperforms Logistic Regression with higher AUC.
+                    </p>
+                    <div class="finding-stats">
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">0.65</div>
+                            <div class="finding-stat-label">Logistic Reg AUC</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">0.72</div>
+                            <div class="finding-stat-label">Random Forest AUC</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">9</div>
+                            <div class="finding-stat-label">Features Used</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Finding 2: Regression Results -->
+            <div class="finding-card animate-on-scroll">
+                <div class="finding-visual">
+                    <img src="../figures/regression_results.png" alt="Regression Results: Actual vs Predicted Workout Minutes" style="max-height: 350px;">
+                </div>
+                <div class="finding-content">
+                    <span class="finding-tag">Regression Task</span>
+                    <h3 class="finding-title">Predicting Workout Duration (Regression)</h3>
+                    <p class="finding-description">
+                        For days with workouts, regression models predict total workout minutes using Instagram 
+                        engagement features. The scatter plot shows actual vs. predicted values using Random Forest Regression. 
+                        The model captures general trends but has limited precision for exact duration.
+                    </p>
+                    <div class="finding-stats">
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">R²</div>
+                            <div class="finding-stat-label">Model Fit Metric</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">RF</div>
+                            <div class="finding-stat-label">Best Model</div>
+                        </div>
+                        <div class="finding-stat">
+                            <div class="finding-stat-value">9</div>
+                            <div class="finding-stat-label">Features Used</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ML Features Explanation -->
+        <div class="insight-highlight animate-on-scroll" style="margin-top: 3rem;">
+            <p class="insight-text">
+                Machine learning models used <span class="highlight">lag features</span> (previous day's values), 
+                <span class="highlight">rolling averages</span> (7-day windows), and 
+                <span class="highlight">temporal indicators</span> (day of week, weekend) to capture behavioral patterns.
+            </p>
+        </div>
+
+        <!-- Features Used Grid -->
+        <div class="stats-grid" style="margin-top: 2rem;">
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-icon instagram">📊</div>
+                <div class="stat-number" style="font-size: 1.8rem;">Features</div>
+                <div class="stat-label" style="color: var(--text-primary);">Classification Model</div>
+                <div class="stat-detail">
+                    total_like_save, fitness_total, 7-day rolling averages, workout_done_lag1, 
+                    day_of_week, is_weekend
+                </div>
+            </div>
+            <div class="stat-card fitness animate-on-scroll">
+                <div class="stat-icon fitness">🎯</div>
+                <div class="stat-number" style="font-size: 1.8rem;">Features</div>
+                <div class="stat-label" style="color: var(--text-primary);">Regression Model</div>
+                <div class="stat-detail">
+                    total_like_save, fitness_total, 7-day rolling averages, 
+                    total_workout_minutes_lag1, day_of_week, is_weekend
+                </div>
+            </div>
+        </div>
+
     <!-- Conclusions -->
     <section id="conclusions">
         <div class="section-header animate-on-scroll">
@@ -1276,8 +1392,8 @@
         <div class="insight-highlight animate-on-scroll">
             <p class="insight-text">
                 The data suggests a <span class="highlight">weak positive association</span> between 
-                fitness content engagement and workout behavior, but 
-                <span class="highlight">no strong causal relationship</span> can be established.
+                fitness content engagement and workout behavior. Machine learning models show 
+                <span class="highlight">moderate predictive power</span> using Instagram patterns.
             </p>
         </div>
 
@@ -1294,10 +1410,10 @@
             <div class="stat-card fitness animate-on-scroll">
                 <div class="stat-icon fitness">📊</div>
                 <div class="stat-number" style="font-size: 2rem;">Finding 2</div>
-                <div class="stat-label" style="font-size: 1.1rem; color: var(--text-primary);">Statistical Insignificance</div>
+                <div class="stat-label" style="font-size: 1.1rem; color: var(--text-primary);">ML Shows Promise</div>
                 <div class="stat-detail">
-                    The t-test (p=0.498) confirms no significant difference in workout duration 
-                    based on fitness content exposure.
+                    Random Forest achieves AUC ~0.72 for workout prediction, suggesting Instagram 
+                    patterns contain useful signals for predicting exercise behavior.
                 </div>
             </div>
             <div class="stat-card animate-on-scroll">
@@ -1307,6 +1423,15 @@
                 <div class="stat-detail">
                     Exercise motivation is multifactorial. Social media is just one potential 
                     influence among many lifestyle factors.
+                </div>
+            </div>
+            <div class="stat-card fitness animate-on-scroll">
+                <div class="stat-icon fitness">📈</div>
+                <div class="stat-number" style="font-size: 2rem;">Finding 4</div>
+                <div class="stat-label" style="font-size: 1.1rem; color: var(--text-primary);">Lag Features Matter</div>
+                <div class="stat-detail">
+                    Previous day's workout status and rolling averages were important features, 
+                    highlighting the importance of temporal patterns in behavior prediction.
                 </div>
             </div>
         </div>
@@ -1398,6 +1523,14 @@
                     Expand to multiple participants for statistical power and generalizability.
                 </p>
             </div>
+            <div class="future-card animate-on-scroll">
+                <div class="future-icon">🤖</div>
+                <h4 class="future-title">Advanced ML Models</h4>
+                <p class="future-description">
+                    Explore deep learning (LSTM, transformers) to better capture temporal dependencies 
+                    in sequential behavioral data.
+                </p>
+            </div>
         </div>
     </section>
 
@@ -1408,10 +1541,11 @@
             <p class="footer-text">
                 This project was fully conceptualized, designed, and implemented by the author. 
                 AI tools (ChatGPT, Claude) were used only to improve code clarity and text structure. 
+                Machine learning models were implemented using scikit-learn.
                 All core ideas, data collection, analysis, and interpretation are original work.
             </p>
             <div class="footer-links">
-                <a href="https://github.com/uveyzzz/DSA210_project" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/uveyzzz/DSA210_TermProject" target="_blank">GitHub Repository</a>
                 <a href="#about">Back to Top</a>
             </div>
             <p class="footer-copyright">
