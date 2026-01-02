@@ -276,7 +276,7 @@ for this one-year period and one individual.
 ---
 ## HTML Summary Report
 
-Please see the website below for the polished version of the whole project:
+Please see the following website for the polished version of the whole project:
 https://dsa-210-term-project-lttz.vercel.app
 
 To present the results in a more polished way, I also created a small **HTML report**:
